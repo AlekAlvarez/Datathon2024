@@ -4,6 +4,7 @@ import pandas
 import PySimpleGUI as gui
 import matplotlib.pyplot as plt
 dataFrames={}
+files=os.listdir("./RoniData")
 for i in files:
     dataFrames[i]=pandas.read_csv(f"./RoniData/{i}",encoding="latin-1")
 print(dataFrames)
