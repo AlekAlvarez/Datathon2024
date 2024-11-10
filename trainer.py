@@ -218,7 +218,7 @@ class Judge:
             return True
         except (requests.RequestException, requests.Timeout):
             return False
-
+import json
 def main():
     # creating judge
     Data.randomize()
@@ -226,6 +226,14 @@ def main():
         for rounds in range(1):
             for i in range(0,10):
                 Data.current_bot = i
+                x={
+                    "Scores":[0]
+                    "A":[1]
+                    "B":[2]
+                    "C":[3]
+                }
+                data=jsonify(x)
+                request.post(f"{self.p1_url}/getData", json=data, timeout=TIMEOUT)
                 print("Creating judge...")
 
                 judge = Judge("http://127.0.0.1:5008", "http://127.0.0.1:5009")

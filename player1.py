@@ -9,7 +9,10 @@ app = Flask(__name__)
 
 agent = None
 score = 0
-
+scores=[]
+a=[]
+b=[]
+c=[]
 @app.route('/start', methods=['POST'])
 def start_game():
     """
@@ -88,7 +91,13 @@ def make_move():
 # ====================================
 # DO NOT MODIFY BELOW THIS LINE
 # ====================================
-
+@app.route('/getData', methods=['POST'])
+def getData():
+    lists=request.get_json()
+    scores=lists["Scores"]
+    a=lists["A"]
+    b=lists["B"]
+    c=lists["C"]
 @app.route('/', methods=['GET'])
 def hello():
     """Connects to the judge"""
