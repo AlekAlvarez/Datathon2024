@@ -219,6 +219,7 @@ def getInputGraph(month, day, time):
     timeNum=int(time[0:1])
     mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich"]
     yValues=[]
+    print(timeNum,monthNum,dayNum)
     for meal in mealTypes:
         x={"Month":[monthNum],"Time":[timeNum],"Day":[dayNum]}
         x=pandas.DataFrame(x)
@@ -244,6 +245,9 @@ for meal in summerPredictions:
                 dayNum= 6
             case "sun":
                 dayNum= 7
+            case _:
+                raise ValueError("kajfkladsj")
+
         pred=[]
         for i in range(4,11):
             x={"Month":[i],"Time":[timeNum],"Day":[dayNum]}
@@ -263,12 +267,12 @@ def updateGraph(mealTypes, amountOfMeals):
 
 #graph data
 months = ["April", "May", "June", "July", "August", "September", "October"]
-mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich"]
+mealTypes=["Mac & Cheese","Mac & Cheese Party","Grilled Cheese Sandwich"]
 amountOfMeals=[0,0,0]
 
 #bar graph 
 fig1 = plt.figure()
-gs = gridspec.GridSpec(2,2, height_ratios=(1,1), width_ratios=(1,1), wspace=0.5, hspace=0.5)
+gs = gridspec.GridSpec(2,2, height_ratios=(1,1), width_ratios=(1,1.5), wspace=0.3, hspace=0.5)
 ax1 = plt.subplot(gs[0,:])
 ax1.bar(list(itemsOrderedPerMonth.keys()), list(itemsOrderedPerMonth.values()))
 ax1.set_title("Total Orders per Month")
@@ -292,15 +296,16 @@ for i in range(77):
     xList.append(i)
 ax3 = plt.subplot(gs[1,0])
 for key in schoolPredictions:
-    ax3.plot(xList, list(schoolPredictions[key].values()), label=key)
+    if key[0:3]=="Mac":
+        ax3.plot(xList, list(schoolPredictions[key].values()), label=key[0:20].replace("and","&"))
+    else:
+        ax3.plot(xList, list(schoolPredictions[key].values()), label=key[0:15])
 ax3.set_title("School Months")
 ax3.set_xlabel("Time")
 ax3.set_ylabel("Amount of Meal Type")
 ax3.set_xticks([0,38,76])
 ax3.set_xticklabels(["Mon:11", "Thur:11", "Sun:11"])
-ax3.legend()
-
-#ax3.legend()
+ax3.legend(loc="upper left")
 
 #input and input graph
 month='Month'
@@ -334,7 +339,8 @@ while True:
             #update graph
             month = values["Month"]
             day = values["Day"]
-            times = values["Time"]
+            time = values["Time"]
+            print("Hi")
             amountOfMeals = getInputGraph(values["Month"], values["Day"], values["Time"])
             fig1 = updateGraph(mealTypes, amountOfMeals)
             figg_agg.draw()
