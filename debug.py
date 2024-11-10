@@ -31,49 +31,26 @@ for i in files:
     dataFrames[i]=pandas.read_csv(f"./RoniData/{i}",encoding="latin-1")
 modelDataFrames={"Mac and Cheese" :{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
                  "Mac and Cheese Party Tray (Plus FREE Garlic Bread)":{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                "Grilled Cheese Sandwich":{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                'Cheesecake':{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                'Side Mac':{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                'Cheesy Garlic Bread':{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-               'Cheesy Garlic Bread' :{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-              'Garlic Bread'  :{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]}
+                "Grilled Cheese Sandwich":{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]}
                  }
 validationData={"Mac and Cheese" :{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
                  "Mac and Cheese Party Tray (Plus FREE Garlic Bread)":{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                "Grilled Cheese Sandwich":{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                'Cheesecake':{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                'Side Mac':{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-                'Cheesy Garlic Bread':{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-               'Cheesy Garlic Bread' :{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]},
-              'Garlic Bread'  :{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]}
+                "Grilled Cheese Sandwich":{"Month":[],"Time":[],"Day":[],"OrderNumbers":[]}
                  }
 itemsOrderedPerMonth={"April":0,"May":0,"June":0,"July":0,"August":0,"September":0,"October":0}
 summerPredictions={"Mac and Cheese" :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
 "Mac and Cheese Party Tray (Plus FREE Garlic Bread)" :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-"Grilled Cheese Sandwich" :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Cheesecake' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Side Mac' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Cheesy Garlic Bread' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Garlic Bread' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0}
+"Grilled Cheese Sandwich" :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0}
 }
 schoolPredictions={"Mac and Cheese" :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
 "Mac and Cheese Party Tray (Plus FREE Garlic Bread)" :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
 "Grilled Cheese Sandwich" :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Cheesecake' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Side Mac' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Cheesy Garlic Bread' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0},
-'Garlic Bread' :{"Mon 11":0,"Mon 12":0,"Mon 1":0,"Mon 2":0,"Mon 3":0,"Mon 4":0,"Mon 5":0,"Mon 6":0,"Mon 7":0,"Mon 8":0,"Mon 9":0,"Tue 11":0,"Tue 12":0,"Tue 1":0,"Tue 2":0,"Tue 3":0,"Tue 4":0,"Tue 5":0,"Tue 6":0,"Tue 7":0,"Tue 8":0,"Tue 9":0,"Wed 11":0,"Wed 12":0,"Wed 1":0,"Wed 2":0,"Wed 3":0,"Wed 4":0,"Wed 5":0,"Wed 6":0,"Wed 7":0,"Wed 8":0,"Wed 9":0,"Thur 11":0,"Thur 12":0,"Thur 1":0,"Thur 2":0,"Thur 3":0,"Thur 4":0,"Thur 5":0,"Thur 6":0,"Thur 7":0,"Thur 8":0,"Thur 9":0,"Fri 11":0,"Fri 12":0,"Fri 1":0,"Fri 2":0,"Fri 3":0,"Fri 4":0,"Fri 5":0,"Fri 6":0,"Fri 7":0,"Fri 8":0,"Fri 9":0,"Sat 11":0,"Sat 12":0,"Sat 1":0,"Sat 2":0,"Sat 3":0,"Sat 4":0,"Sat 5":0,"Sat 6":0,"Sat 7":0,"Sat 8":0,"Sat 9":0, "Sun 11":0,"Sun 12":0,"Sun 1":0,"Sun 2":0,"Sun 3":0,"Sun 4":0,"Sun 5":0,"Sun 6":0,"Sun 7":0,"Sun 8":0,"Sun 9":0}
 }
 for i in files:
-    print(i)
     month=0
     dataInFile={"Mac and Cheese" :{"day":[],"time":[],"order":[],"month":[]},
                  "Mac and Cheese Party Tray (Plus FREE Garlic Bread)":{"day":[],"time":[],"order":[],"month":[]},
                 "Grilled Cheese Sandwich":{"day":[],"time":[],"order":[],"month":[]},
-                'Cheesecake':{"day":[],"time":[],"order":[],"month":[]},
-                'Side Mac':{"day":[],"time":[],"order":[],"month":[]},
-                'Cheesy Garlic Bread':{"day":[],"time":[],"order":[],"month":[]},
-              'Garlic Bread'  :{"day":[],"time":[],"order":[],"month":[]}
         }
     match i:
         case "april_2024.csv":
@@ -98,7 +75,6 @@ for i in files:
             itemsOrderedPerMonth["September"]+=(dataFrames[i].shape[0])
             month=9
     for index, row in dataFrames[i].iterrows():
-        #print(index)
         if row["Parent Menu Selection"]!="Sides/Desserts" and index!=0:
             name=row["Parent Menu Selection"]
             sent_date=row["Sent Date"]
@@ -108,35 +84,47 @@ for i in files:
             if index!=0:
                 k=6
                 day=get_day_of_week(date)
-            time=time[0:2]
-            if name=="Mac and Cheese" or name=="Grilled Cheese Sandwich" or name=="Mac and Cheese Party Tray (Plus FREE Garlic Bread)":
+            time=int(time[0:2])
+            #name=="Mac and Cheese" or
+            if  name=="Mac and Cheese" or name=="Grilled Cheese Sandwich" or name=="Mac and Cheese Party Tray (Plus FREE Garlic Bread)":
                 if time in dataInFile[name]["time"] and day in dataInFile[name]["day"]:
-                    index=0
+                    index=-1
                     for pos, i in enumerate(dataInFile[name]["time"]):
                         if i==time and dataInFile[name]["day"][pos]==day:
                             index=pos
                             break
-                    dataInFile[name]["order"][index]+=1
+                    if index!=-1:
+                        dataInFile[name]["order"][index]+=1
                 else:
                     dataInFile[name]["time"].append(time)
                     dataInFile[name]["day"].append(day)
                     dataInFile[name]["order"].append(1)
                     dataInFile[name]["month"].append(month)       
-        else:
-            name=row["Modifier"]
-            if (name=='Cheesecake' or name=='Side Mac' or name=='Cheesy Garlic Bread' or name=='Garlic Bread') and index!=0 :
-                if time in dataInFile[name]["time"] and day in dataInFile[name]["day"]:
-                    index=0
-                    for pos, i in enumerate(dataInFile[name]["time"]):
-                        if i==time and dataInFile[name]["day"][pos]==day:
-                            index=pos
-                            break
-                    dataInFile[name]["order"][index]+=1
-                else:
-                    dataInFile[name]["time"].append(time)
-                    dataInFile[name]["day"].append(day)
-                    dataInFile[name]["order"].append(1)
-                    dataInFile[name]["month"].append(month) 
+        # else:
+        #     name=row["Modifier"]
+        #     if (name=='Cheesecake' or name=='Side Mac' or name=='Cheesy Garlic Bread' or name=='Garlic Bread') and index!=0 :
+        #         sent_date=row["Sent Date"]
+        #         date=sent_date[0:10]
+        #         time=sent_date[11:]
+        #         day="Place holder"
+        #         if index!=0:
+        #             k=6
+        #             day=get_day_of_week(date)
+        #         time=int(time[0:2])
+        #         if time in dataInFile[name]["time"] and day in dataInFile[name]["day"]:
+        #             index=-1
+        #             for pos, i in enumerate(dataInFile[name]["time"]):
+        #                 if i==time and dataInFile[name]["day"][pos]==day:
+        #                     index=pos
+        #                     break
+        #             if index!=-1:
+        #                 dataInFile[name]["order"][index]+=1
+        #         else:
+        #             dataInFile[name]["time"].append(time)
+        #             dataInFile[name]["day"].append(day)
+        #             dataInFile[name]["order"].append(1)
+        #             dataInFile[name]["month"].append(month)
+    print(dataInFile)
     for name in dataInFile:
         for i in range(len(dataInFile[name]["time"])):
             #Data has a 1 in 8 chance of being used for validation
@@ -229,8 +217,7 @@ def getInputGraph(month, day, time):
         case "december":
             monthNum=12
     timeNum=int(time[0:1])
-    mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich",'Cheesecake',
-    'Side Mac', 'Cheesy Garlic Bread', 'Garlic Bread']
+    mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich"]
     yValues=[]
     for meal in mealTypes:
         x={"Month":[monthNum],"Time":[timeNum],"Day":[dayNum]}
@@ -267,8 +254,6 @@ for meal in summerPredictions:
 
 def updateGraph(mealTypes, amountOfMeals):
     ax4.cla()
-    print(mealTypes)
-    print(amountOfMeals)
     ax4.bar(mealTypes,amountOfMeals)
     ax4.set_xlabel("Meal Type")
     ax4.set_ylabel("Amount")
@@ -278,13 +263,12 @@ def updateGraph(mealTypes, amountOfMeals):
 
 #graph data
 months = ["April", "May", "June", "July", "August", "September", "October"]
-mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich",'Cheesecake',
-    'Side Mac', 'Cheesy Garlic Bread', 'Garlic Bread']
-amountOfMeals=[0,0,0,0,0,0,0]
+mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich"]
+amountOfMeals=[0,0,0]
 
 #bar graph 
 fig1 = plt.figure()
-gs = gridspec.GridSpec(2,3, height_ratios=(1,1), width_ratios=(1,1,1), wspace=0.5, hspace=0.5)
+gs = gridspec.GridSpec(2,2, height_ratios=(1,1), width_ratios=(1,1), wspace=0.5, hspace=0.5)
 ax1 = plt.subplot(gs[0,:])
 ax1.bar(list(itemsOrderedPerMonth.keys()), list(itemsOrderedPerMonth.values()))
 ax1.set_title("Total Orders per Month")
@@ -292,27 +276,29 @@ ax1.set_xlabel("Months")
 ax1.set_ylabel("Total Orders")
 
 #line graph for summer months
-ax2 = plt.subplot(gs[1,0])
-for key in summerPredictions:
-    ax2.plot(list(summerPredictions[key].keys()), list(summerPredictions[key].values()), label=key)
-ax2.set_title("Summer Months")
+#ax2 = plt.subplot(gs[1,0])
+#for key in summerPredictions:
+#    ax2.plot(list(summerPredictions[key].keys()), list(summerPredictions[key].values()), label=key)
+#ax2.set_title("Summer Months")
 #ax2.set_xlabel("Time")
-ax2.set_ylabel("Amount of Meal Type")
-ax2.set_xticks(["Sun:11", "Mon:11", "Tue:11", "Wed:11", "Thur:11", "Fri:11", "Sat:11"])
+#ax2.set_ylabel("Amount of Meal Type")
+#ax2.set_xticks([0,76])
+#ax2.set_xticklabels(["Sun:11", "Wed:11", "Sat:11"])
 #ax2.legend()
 
 #line graph for school months
 xList=[]
 for i in range(77):
     xList.append(i)
-ax3 = plt.subplot(gs[1,1])
+ax3 = plt.subplot(gs[1,0])
 for key in schoolPredictions:
     ax3.plot(xList, list(schoolPredictions[key].values()), label=key)
 ax3.set_title("School Months")
 ax3.set_xlabel("Time")
 ax3.set_ylabel("Amount of Meal Type")
-ax3.set_xticks([0,76])
-ax3.set_xticklabels(["Mon 11", "Sunf 11"])
+ax3.set_xticks([0,38,76])
+ax3.set_xticklabels(["Mon:11", "Thur:11", "Sun:11"])
+ax3.legend()
 
 #ax3.legend()
 
@@ -320,7 +306,7 @@ ax3.set_xticklabels(["Mon 11", "Sunf 11"])
 month='Month'
 day='Day'
 time='Time'
-ax4 = plt.subplot(gs[1,2])
+ax4 = plt.subplot(gs[1,1])
 ax4.bar(mealTypes,amountOfMeals)
 ax4.set_xlabel("Meal Type")
 ax4.set_ylabel("Amount")
@@ -338,8 +324,6 @@ window = gui.Window("Window", layout, finalize=True)
 #draw graphs onto canvas
 figg_agg = draw_figure(window['Canvas1'].TKCanvas, fig1)
 window.maximize()
-print(summerPredictions)
-print(schoolPredictions)
 #event loop
 while True:
     event, values = window.read()
