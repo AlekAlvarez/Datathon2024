@@ -100,31 +100,7 @@ for i in files:
                     dataInFile[name]["day"].append(day)
                     dataInFile[name]["order"].append(1)
                     dataInFile[name]["month"].append(month)       
-        # else:
-        #     name=row["Modifier"]
-        #     if (name=='Cheesecake' or name=='Side Mac' or name=='Cheesy Garlic Bread' or name=='Garlic Bread') and index!=0 :
-        #         sent_date=row["Sent Date"]
-        #         date=sent_date[0:10]
-        #         time=sent_date[11:]
-        #         day="Place holder"
-        #         if index!=0:
-        #             k=6
-        #             day=get_day_of_week(date)
-        #         time=int(time[0:2])
-        #         if time in dataInFile[name]["time"] and day in dataInFile[name]["day"]:
-        #             index=-1
-        #             for pos, i in enumerate(dataInFile[name]["time"]):
-        #                 if i==time and dataInFile[name]["day"][pos]==day:
-        #                     index=pos
-        #                     break
-        #             if index!=-1:
-        #                 dataInFile[name]["order"][index]+=1
-        #         else:
-        #             dataInFile[name]["time"].append(time)
-        #             dataInFile[name]["day"].append(day)
-        #             dataInFile[name]["order"].append(1)
-        #             dataInFile[name]["month"].append(month)
-    print(dataInFile)
+    
     for name in dataInFile:
         for i in range(len(dataInFile[name]["time"])):
             #Data has a 1 in 8 chance of being used for validation
@@ -278,17 +254,6 @@ ax1.bar(list(itemsOrderedPerMonth.keys()), list(itemsOrderedPerMonth.values()))
 ax1.set_title("Total Orders per Month")
 ax1.set_xlabel("Months")
 ax1.set_ylabel("Total Orders")
-
-#line graph for summer months
-#ax2 = plt.subplot(gs[1,0])
-#for key in summerPredictions:
-#    ax2.plot(list(summerPredictions[key].keys()), list(summerPredictions[key].values()), label=key)
-#ax2.set_title("Summer Months")
-#ax2.set_xlabel("Time")
-#ax2.set_ylabel("Amount of Meal Type")
-#ax2.set_xticks([0,76])
-#ax2.set_xticklabels(["Sun:11", "Wed:11", "Sat:11"])
-#ax2.legend()
 
 #line graph for school months
 xList=[]
