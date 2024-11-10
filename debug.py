@@ -77,25 +77,25 @@ for i in files:
         }
     match i:
         case "april_2024.csv":
-            itemsOrderedPerMonth["April"]+=1*(dataFrames[i].shape()[0])
+            itemsOrderedPerMonth["April"]+=1*(dataFrames[i].shape[0])
             month=4
         case "august_2024.csv":
-            itemsOrderedPerMonth["August"]+=(dataFrames[i].shape()[0])
+            itemsOrderedPerMonth["August"]+=(dataFrames[i].shape[0])
             month=8
         case "july_2024.csv":
-            itemsOrderedPerMonth["July"]+=(dataFrames[i].shape()[0])
+            itemsOrderedPerMonth["July"]+=(dataFrames[i].shape[0])
             month=7
         case "june_2024.csv":
-            itemsOrderedPerMonth["June"]+=(dataFrames[i].shape()[0])
+            itemsOrderedPerMonth["June"]+=(dataFrames[i].shape[0])
             month=6
         case "may_2024.csv":
-            itemsOrderedPerMonth["May"]+=(dataFrames[i].shape()[0])
+            itemsOrderedPerMonth["May"]+=(dataFrames[i].shape[0])
             month=5
         case "october_2024.csv":
-            itemsOrderedPerMonth["October"]+=(dataFrames[i].shape()[0])
+            itemsOrderedPerMonth["October"]+=(dataFrames[i].shape[0])
             month=10
         case "september_2024.csv":
-            itemsOrderedPerMonth["September"]+=(dataFrames[i].shape()[0])
+            itemsOrderedPerMonth["September"]+=(dataFrames[i].shape[0])
             month=9
     for index, row in dataFrames[i].iterrows():
         #print(index)
@@ -176,6 +176,7 @@ for meal in modelDataFrames:
     model = DecisionTreeRegressor(max_leaf_nodes=leaf_nodes[error.index(min(error))], random_state=1)
     model.fit(x,y)
     models[meal]=model
+
 #draw graphs onto canvas
 def draw_figure(canvas, figure):
     figure_canvas = FigureCanvasTkAgg(figure, canvas)
@@ -183,7 +184,6 @@ def draw_figure(canvas, figure):
     figure_canvas.get_tk_widget().pack(side='top', fill='both', expand=1)
     return figure_canvas
 
-#ALEK: CHNAGE THIS METHOD PLS
 #to use month/day/time to return list of x values (amount of each meal type, in the order of the list called mealTypes)
 def getInputGraph(month, day, time):
     monthNum=0
@@ -230,9 +230,7 @@ def getInputGraph(month, day, time):
             monthNum=12
     timeNum=int(time[0:1])
     mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich",'Cheesecake',
-    'Side Mac',
-    'Cheesy Garlic Bread',
-              'Garlic Bread']
+    'Side Mac', 'Cheesy Garlic Bread', 'Garlic Bread']
     yValues=[]
     for meal in mealTypes:
         x={"Month":[monthNum],"Time":[timeNum],"Day":[dayNum]}
@@ -245,26 +243,28 @@ for meal in summerPredictions:
         day=t[0]
         timeNum=int(t[1])
         match day.lower():
-        case "mon":
-            dayNum= 1
-        case "tue":
-            dayNum= 2
-        case "wed":
-            dayNum= 3
-        case "thur":
-            dayNum= 4
-        case "fri":
-            dayNum= 5
-        case "sat":
-            dayNum= 6
-        case "sun":
-            dayNum= 7
+            case "mon":
+                dayNum= 1
+            case "tue":
+                dayNum= 2
+            case "wed":
+                dayNum= 3
+            case "thur":
+                dayNum= 4
+            case "fri":
+                dayNum= 5
+            case "sat":
+                dayNum= 6
+            case "sun":
+                dayNum= 7
         pred=[]
         for i in range(4,11):
             x={"Month":[i],"Time":[timeNum],"Day":[dayNum]}
-            pred.append(models[meal].predict(x))
-        summerPredictions[meal]=(pred[1]+pred[2]+pred[3])/3
-        schoolPredictions[meal]=(pred[0]+pred[4]+pred[5]+pred[6])/4
+            x=pandas.DataFrame(x)
+            pred.append(models[meal].predict(x)[0])
+        summerPredictions[meal][time]=(pred[1]+pred[2]+pred[3])/3
+        schoolPredictions[meal][time]=(pred[0]+pred[4]+pred[5]+pred[6])/4
+
 def updateGraph(mealTypes, amountOfMeals):
     ax4.cla()
     print(mealTypes)
@@ -278,16 +278,13 @@ def updateGraph(mealTypes, amountOfMeals):
 
 #graph data
 months = ["April", "May", "June", "July", "August", "September", "October"]
-mealTypes = ["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich",'Cheesecake',
-    'Side Mac',
-    'Cheesy Garlic Bread',
-              'Garlic Bread']
-#delete line below, used for testing
+mealTypes=["Mac and Cheese","Mac and Cheese Party Tray (Plus FREE Garlic Bread)","Grilled Cheese Sandwich",'Cheesecake',
+    'Side Mac', 'Cheesy Garlic Bread', 'Garlic Bread']
 amountOfMeals=[0,0,0,0,0,0,0]
 
 #bar graph 
 fig1 = plt.figure()
-gs = gridspec.GridSpec(2,3, height_ratios=(1,1), width_ratios=(1,1,2))
+gs = gridspec.GridSpec(2,3, height_ratios=(1,1), width_ratios=(1,1,1), wspace=0.5, hspace=0.5)
 ax1 = plt.subplot(gs[0,:])
 ax1.bar(list(itemsOrderedPerMonth.keys()), list(itemsOrderedPerMonth.values()))
 ax1.set_title("Total Orders per Month")
@@ -299,19 +296,24 @@ ax2 = plt.subplot(gs[1,0])
 for key in summerPredictions:
     ax2.plot(list(summerPredictions[key].keys()), list(summerPredictions[key].values()), label=key)
 ax2.set_title("Summer Months")
-ax2.set_xlabel("Time")
+#ax2.set_xlabel("Time")
 ax2.set_ylabel("Amount of Meal Type")
-ax2.set_xticks(["Sun 11", "Mon 11", "Tue 11", "Wed 11", "Thur 11", "Fri 11", "Sat 11"])
+ax2.set_xticks(["Sun:11", "Mon:11", "Tue:11", "Wed:11", "Thur:11", "Fri:11", "Sat:11"])
 #ax2.legend()
 
 #line graph for school months
+xList=[]
+for i in range(77):
+    xList.append(i)
 ax3 = plt.subplot(gs[1,1])
 for key in schoolPredictions:
-    ax3.plot(list(schoolPredictions[key].keys()), list(schoolPredictions[key].values()), label=key)
+    ax3.plot(xList, list(schoolPredictions[key].values()), label=key)
 ax3.set_title("School Months")
 ax3.set_xlabel("Time")
 ax3.set_ylabel("Amount of Meal Type")
-ax3.set_xticks(["Sun 11", "Mon 11", "Tue 11", "Wed 11", "Thur 11", "Fri 11", "Sat 11"])
+ax3.set_xticks([0,76])
+ax3.set_xticklabels(["Mon 11", "Sunf 11"])
+
 #ax3.legend()
 
 #input and input graph
@@ -325,7 +327,7 @@ ax4.set_ylabel("Amount")
 ax4.set_title(f"Predicted Meals for {month} on {day} at {time}")
 
 #gui layout
-fig1.tight_layout()
+#fig1.tight_layout()
 layout = [[gui.Text("Roni's Mac Bar Data")],
           [gui.Canvas(key="Canvas1", size=(1500,600))],
           [gui.Push(), gui.Text("Month"), gui.Input(key="Month"), gui.Push()],
@@ -336,7 +338,8 @@ window = gui.Window("Window", layout, finalize=True)
 #draw graphs onto canvas
 figg_agg = draw_figure(window['Canvas1'].TKCanvas, fig1)
 window.maximize()
-
+print(summerPredictions)
+print(schoolPredictions)
 #event loop
 while True:
     event, values = window.read()
