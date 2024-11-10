@@ -1,21 +1,19 @@
 from flask import Flask, request, jsonify
 from PushBattle import Game, PLAYER1, PLAYER2, EMPTY, BOARD_SIZE, NUM_PIECES, _torus
-import random
+
+# This simulates player 2 always playing random moves - you may modify to test locally
 # Import This
-from dummy_Darwin import Darwin
-# from <AGENT FILENAME> import <AGENT CLASSNAME>
+from random_agent import RandomAgent
 
 app = Flask(__name__)
 
 agent = None
-
 index = 0
 scores = []
 a = []
 b = []
 c = []
 d = []
-
 @app.route('/start', methods=['POST'])
 def start_game():
     """
@@ -40,7 +38,7 @@ def start_game():
 
     ##### MODIFY BELOW #####
 
-    agent = Darwin()
+    agent = RandomAgent()
 
     ###################
     
@@ -84,26 +82,13 @@ def make_move():
     # Move logic should go here
     # This is where you'd call your minimax/MCTS/neural network/etc
     move = agent.get_best_move(game)
+
     ###################
     
     return jsonify({
         "move": move  # Return your chosen move
     })
-@app.route('/getData', methods=['POST'])
-def getData():
-    global index
-    global scores
-    global a
-    global b
-    global c
-    global d
-    lists=request.get_json()
-    index = lists["Index"][0]
-    scores=lists["Scores"]
-    a=lists["A"]
-    b=lists["B"]
-    c=lists["C"]
-    d=lists["D"]
+
 # ====================================
 # DO NOT MODIFY BELOW THIS LINE
 # ====================================
@@ -127,4 +112,4 @@ def end_game():
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5008, debug=True)
+    app.run(host='0.0.0.0', port=5009, debug=True)

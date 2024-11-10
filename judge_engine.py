@@ -2,10 +2,8 @@ import numpy as np
 import requests
 import time
 from PushBattle import Game, PLAYER1, PLAYER2, EMPTY, BOARD_SIZE, NUM_PIECES, _torus, chess_notation_to_array, array_to_chess_notation
-import random
-from training_data import Data
-current_bot = 0
 
+import random
 class RandomAgent:
     def __init__(self, player=PLAYER1):
         self.player = player
@@ -167,14 +165,6 @@ class Judge:
             response = requests.post(f"{self.p1_url}/end", json=end_data, timeout=TIMEOUT)
             response = requests.post(f"{self.p2_url}/end", json=end_data, timeout=TIMEOUT)
             print(f"Winner: {'PLAYER1' if winner == PLAYER1 else 'PLAYER2'}")
-
-            if winner == PLAYER1:
-                Data.scores[Data.current_bot] += 10  
-            print (Data.A)
-            print (Data.B)
-            print (Data.scores)
-
-
         except (requests.RequestException, requests.Timeout):
             return False
 
@@ -218,143 +208,131 @@ class Judge:
             return True
         except (requests.RequestException, requests.Timeout):
             return False
-import json
+            
+
 def main():
     # creating judge
-    Data.randomize()
-    for iterations in range(2):
-        for rounds in range(1):
-            for i in range(0,10):
-                Data.current_bot = i
-                x={
-                    "Scores":[0]
-                    "A":[1]
-                    "B":[2]
-                    "C":[3]
-                }
-                data=jsonify(x)
-                request.post(f"{self.p1_url}/getData", json=data, timeout=TIMEOUT)
-                print("Creating judge...")
+    print("Creating judge...")
 
-                judge = Judge("http://127.0.0.1:5008", "http://127.0.0.1:5009")
+    judge = Judge("http://127.0.0.1:5008", "http://127.0.0.1:5009")
+    
+    # creating game link
+    if not judge.check_latency():
+        print("Failed to connect to one or both players")
+        return
+        
+    print(f"Player 1: {judge.p1_agent.agent_name} ({judge.p1_agent.participant})")
+    print(f"Player 2: {judge.p2_agent.agent_name} ({judge.p2_agent.participant})")
+    print(f"Initial latencies - P1: {judge.p1_agent.latency:.3f}s, P2: {judge.p2_agent.latency:.3f}s")
+    
+    # sending out start information
+    print("Starting game...")
+    if not judge.start_game():
+        print("Failed to start game")
+        return
+
+    # random moves left for p1 and p2
+    p1_random = 5
+    p2_random = 5
+        
+    # game loop
+    while True:
+        judge.game.turn_count += 1
+        print(f"Turn {judge.game.turn_count}")
+
+        # movement
+        print("Sending move to:", judge.game.current_player)
+
+        # first move attempt
+        print("First move attempt")
+        first_attempt = judge.receive_move(1, p1_random, p2_random)
+
+        # checks if the first attempt was a forfeit
+        if first_attempt == "forfeit":
+            player = 1 if judge.game.current_player == 1 else 2
+
+            judge.game_str += f"-q"
+
+            winner = 1 if player == 2 else -1
+
+            judge.end_game(winner)
+            print("Game String:", judge.game_str)
+            break
+
+        # if not judge.send_move(1, p1_random, p2_random):
+        if not first_attempt:
+            print("Second move attempt")
+
+            second_attempt = judge.receive_move(2, p1_random, p2_random)
+            if second_attempt == "forfeit":
+                player = 1 if judge.game.current_player == 1 else 2
+                # indicates forfeit
+                judge.game_str += f"-q"
+
+                winner = 1 if player == 2 else -1
+
+                judge.end_game(winner)
+                print("Game String:", judge.game_str)
+                break
+
+            # second move attempt
+            if not second_attempt:
+                # plays a random move
+                print(f"Player {'PLAYER1' if judge.game.current_player == PLAYER1 else 'PLAYER2'} failed to make a valid move.")
+
+                current_random_moves = p1_random if judge.game.current_player == PLAYER1 else p2_random
                 
-                # creating game link
-                if not judge.check_latency():
-                    print("Failed to connect to one or both players")
-                    return
+                if current_random_moves > 0:
+                    random = RandomAgent(player=judge.game.current_player)
+                    move = random.get_best_move(judge.game)
+                    # judge.handle_move(judge.game, move)
+
+                    move = array_to_chess_notation(move)
+                    judge.handle_move(judge.game, move)
+                    # tag that it was random
+                    judge.game_str += 'r'
+
+                    if judge.game.current_player == PLAYER1:
+                        p1_random -= 1
+                        print(f"P1 has {p1_random} random moves left")
+                    else:
+                        p2_random -= 1
+                        print(f"P2 has {p2_random} random moves left")
+                else:
+                    # current player forfeits
+                    print(f"Player {judge.game.current_player} has no random moves left. Forfeiting.")
+                    if judge.game.current_player == PLAYER1:
+                        judge.end_game(PLAYER2)
+                    else:
+                        judge.end_game(PLAYER1)
+
+                    player = 1 if judge.game.current_player == 1 else 2
+                    # indicates forfeit
+                    judge.game_str += f"-q"
                     
-                print(f"Player 1: {judge.p1_agent.agent_name} ({judge.p1_agent.participant})")
-                print(f"Player 2: {judge.p2_agent.agent_name} ({judge.p2_agent.participant})")
-                print(f"Initial latencies - P1: {judge.p1_agent.latency:.3f}s, P2: {judge.p2_agent.latency:.3f}s")
-                
-                # sending out start information
-                print("Starting game...")
-                if not judge.start_game():
-                    print("Failed to start game")
-                    return
+                    print("Game String:", judge.game_str)
+                    break
 
-                # random moves left for p1 and p2
-                p1_random = 5
-                p2_random = 5
-                    
-                # game loop
-                while True:
-                    judge.game.turn_count += 1
-                    print(f"Turn {judge.game.turn_count}")
+        judge.game.display_board()
+            
+        # check for a winner
+        winner = judge.game.check_winner()
+        if winner != EMPTY:
+            judge.end_game(winner)
+            print("Game String:", judge.game_str)
+            break
 
-                    # movement
-                    print("Sending move to:", judge.game.current_player)
+        # swaps player
+        judge.game.current_player *= -1
 
-                    # first move attempt
-                    print("First move attempt")
-                    first_attempt = judge.receive_move(1, p1_random, p2_random)
+        print()
 
-                    # checks if the first attempt was a forfeit
-                    if first_attempt == "forfeit":
-                        player = 1 if judge.game.current_player == 1 else 2
+        # draw after certain number of moves???
+        # if judge.game.total_moves >= 32:
+        #     print("Game ended in a draw")
+        #     judge.end_game(EMPTY)
+        #     break
 
-                        judge.game_str += f"-q"
-
-                        winner = 1 if player == 2 else -1
-
-                        judge.end_game(winner)
-                        print("Game String:", judge.game_str)
-                        break
-
-                    # if not judge.send_move(1, p1_random, p2_random):
-                    if not first_attempt:
-                        print("Second move attempt")
-
-                        second_attempt = judge.receive_move(2, p1_random, p2_random)
-                        if second_attempt == "forfeit":
-                            player = 1 if judge.game.current_player == 1 else 2
-                            # indicates forfeit
-                            judge.game_str += f"-q"
-
-                            winner = 1 if player == 2 else -1
-
-                            judge.end_game(winner)
-                            print("Game String:", judge.game_str)
-                            break
-
-                        # second move attempt
-                        if not second_attempt:
-                            # plays a random move
-                            print(f"Player {'PLAYER1' if judge.game.current_player == PLAYER1 else 'PLAYER2'} failed to make a valid move.")
-
-                            current_random_moves = p1_random if judge.game.current_player == PLAYER1 else p2_random
-                            
-                            if current_random_moves > 0:
-                                random = RandomAgent(player=judge.game.current_player)
-                                move = random.get_best_move(judge.game)
-                                # judge.handle_move(judge.game, move)
-
-                                move = array_to_chess_notation(move)
-                                judge.handle_move(judge.game, move)
-                                # tag that it was random
-                                judge.game_str += 'r'
-
-                                if judge.game.current_player == PLAYER1:
-                                    p1_random -= 1
-                                    print(f"P1 has {p1_random} random moves left")
-                                else:
-                                    p2_random -= 1
-                                    print(f"P2 has {p2_random} random moves left")
-                            else:
-                                # current player forfeits
-                                print(f"Player {judge.game.current_player} has no random moves left. Forfeiting.")
-                                if judge.game.current_player == PLAYER1:
-                                    judge.end_game(PLAYER2)
-                                else:
-                                    judge.end_game(PLAYER1)
-
-                                player = 1 if judge.game.current_player == 1 else 2
-                                # indicates forfeit
-                                judge.game_str += f"-q"
-                                
-                                print("Game String:", judge.game_str)
-                                break
-
-                    judge.game.display_board()
-                        
-                    # check for a winner
-                    winner = judge.game.check_winner()
-                    if winner != EMPTY:
-                        judge.end_game(winner)
-                        print("Game String:", judge.game_str)
-                        break
-
-                    # swaps player
-                    judge.game.current_player *= -1
-
-                    print()
-
-                # draw after certain number of moves???
-                # if judge.game.total_moves >= 32:
-                #     print("Game ended in a draw")
-                #     judge.end_game(EMPTY)
-                #     break
-        Data.evaluate()
 
 if __name__ == "__main__":
     main()
