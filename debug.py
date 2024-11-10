@@ -77,25 +77,25 @@ for i in files:
         }
     match i:
         case "april_2024.csv":
-            itemsOrderedPerMonth["April"]+=1
+            itemsOrderedPerMonth["April"]+=1*(dataFrames[i].shape()[0])
             month=4
         case "august_2024.csv":
-            itemsOrderedPerMonth["August"]+=1
+            itemsOrderedPerMonth["August"]+=(dataFrames[i].shape()[0])
             month=8
         case "july_2024.csv":
-            itemsOrderedPerMonth["July"]+=1
+            itemsOrderedPerMonth["July"]+=(dataFrames[i].shape()[0])
             month=7
         case "june_2024.csv":
-            itemsOrderedPerMonth["June"]+=1
+            itemsOrderedPerMonth["June"]+=(dataFrames[i].shape()[0])
             month=6
         case "may_2024.csv":
-            itemsOrderedPerMonth["May"]+=1
+            itemsOrderedPerMonth["May"]+=(dataFrames[i].shape()[0])
             month=5
-        case "october_2024":
-            itemsOrderedPerMonth["October"]+=1
+        case "october_2024.csv":
+            itemsOrderedPerMonth["October"]+=(dataFrames[i].shape()[0])
             month=10
         case "september_2024.csv":
-            itemsOrderedPerMonth["September"]+=1
+            itemsOrderedPerMonth["September"]+=(dataFrames[i].shape()[0])
             month=9
     for index, row in dataFrames[i].iterrows():
         #print(index)
@@ -239,6 +239,32 @@ def getInputGraph(month, day, time):
         x=pandas.DataFrame(x)
         yValues.append(models[meal].predict(x)[0])
     return yValues
+for meal in summerPredictions:
+    for time in summerPredictions[meal]:
+        t=time.split()
+        day=t[0]
+        timeNum=int(t[1])
+        match day.lower():
+        case "mon":
+            dayNum= 1
+        case "tue":
+            dayNum= 2
+        case "wed":
+            dayNum= 3
+        case "thur":
+            dayNum= 4
+        case "fri":
+            dayNum= 5
+        case "sat":
+            dayNum= 6
+        case "sun":
+            dayNum= 7
+        pred=[]
+        for i in range(4,11):
+            x={"Month":[i],"Time":[timeNum],"Day":[dayNum]}
+            pred.append(models[meal].predict(x))
+        summerPredictions[meal]=(pred[1]+pred[2]+pred[3])/3
+        schoolPredictions[meal]=(pred[0]+pred[4]+pred[5]+pred[6])/4
 def updateGraph(mealTypes, amountOfMeals):
     ax4.cla()
     print(mealTypes)
