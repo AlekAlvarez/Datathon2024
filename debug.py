@@ -237,10 +237,12 @@ def getInputGraph(month, day, time):
     for meal in mealTypes:
         x={"Month":[monthNum],"Time":[timeNum],"Day":[dayNum]}
         x=pandas.DataFrame(x)
-        yValues.append(models[meal].predict())
+        yValues.append(models[meal].predict(x)[0])
     return yValues
 def updateGraph(mealTypes, amountOfMeals):
     ax4.cla()
+    print(mealTypes)
+    print(amountOfMeals)
     ax4.bar(mealTypes,amountOfMeals)
     ax4.set_xlabel("Meal Type")
     ax4.set_ylabel("Amount")
@@ -259,7 +261,7 @@ amountOfMeals=[0,0,0,0,0,0,0]
 
 #bar graph 
 fig1 = plt.figure()
-gs = gridspec.GridSpec(2,3, height_ratios=(1,1), width_ratios=(1,1,1))
+gs = gridspec.GridSpec(2,3, height_ratios=(1,1), width_ratios=(1,1,2))
 ax1 = plt.subplot(gs[0,:])
 ax1.bar(list(itemsOrderedPerMonth.keys()), list(itemsOrderedPerMonth.values()))
 ax1.set_title("Total Orders per Month")
@@ -273,7 +275,8 @@ for key in summerPredictions:
 ax2.set_title("Summer Months")
 ax2.set_xlabel("Time")
 ax2.set_ylabel("Amount of Meal Type")
-ax2.legend()
+ax2.set_xticks(["Sun 11", "Mon 11", "Tue 11", "Wed 11", "Thur 11", "Fri 11", "Sat 11"])
+#ax2.legend()
 
 #line graph for school months
 ax3 = plt.subplot(gs[1,1])
@@ -282,7 +285,8 @@ for key in schoolPredictions:
 ax3.set_title("School Months")
 ax3.set_xlabel("Time")
 ax3.set_ylabel("Amount of Meal Type")
-ax3.legend()
+ax3.set_xticks(["Sun 11", "Mon 11", "Tue 11", "Wed 11", "Thur 11", "Fri 11", "Sat 11"])
+#ax3.legend()
 
 #input and input graph
 month='Month'
